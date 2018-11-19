@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.admin.loginapp.MainActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+    
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
