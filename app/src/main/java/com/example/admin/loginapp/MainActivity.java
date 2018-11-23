@@ -2,7 +2,9 @@ package com.example.admin.loginapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,15 +31,16 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText username,password,displayname;
-    private Button login;
-    private Button loginpage;
-    private ProgressDialog show;
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference firebaseDatabase;
+     private EditText username,password,displayname;
+     private Button login;
+     private Button loginpage;
+     private ProgressDialog show;
+     private FirebaseAuth firebaseAuth;
+     private DatabaseReference firebaseDatabase;
+     android.support.v7.widget.Toolbar toolbar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -51,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.editText);
         password = (EditText) findViewById(R.id.editText2);
         displayname = (EditText)findViewById(R.id.displayname);
-
+        toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Register Page");
         login = (Button) findViewById(R.id.button2);
 
         loginpage.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+     }
 
     private void firebase()
     {
@@ -87,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
         show.setMessage("Registering...");
         show.show();
-        firebaseAuth.createUserWithEmailAndPassword(email,pass)
+        firebaseAuth.createUserWithEmailAndPassword(name,email)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -121,6 +127,4 @@ public class MainActivity extends AppCompatActivity {
 
                 });
     }
-
-
 }

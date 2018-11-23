@@ -7,7 +7,7 @@
     tools:context="com.example.admin.loginapp.MainActivity">
 
     <include layout="@layout/toolbar"
-        android:id="@+id/toolbar"/>
+        />
     
     <EditText
         android:id="@+id/editText"

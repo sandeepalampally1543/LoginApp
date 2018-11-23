@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,11 +25,16 @@ public class Profile extends AppCompatActivity {
     private ViewPager viewPager;
     private SectionPageAdapter sectionPageAdapter;
     private TabLayout tabLayout;
+    Toolbar toolbar1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        toolbar1 = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar1);
+        getSupportActionBar().setTitle("Chat App");
+
         tabLayout =(TabLayout) findViewById(R.id.tabLayout);
         viewPager =(ViewPager) findViewById(R.id.tabviewer);
         sectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
@@ -37,18 +43,30 @@ public class Profile extends AppCompatActivity {
 
     }
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
-
+    public void sendTostart()
+    {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
         switch (item.getItemId()) {
 
-            case R.id.acc_settings:
+            case R.id.sign_out:
+
                 FirebaseAuth.getInstance().signOut();
+                sendTostart();
+                return true;
+
+            case R.id.acc_settings:
+                Toast.makeText(getApplicationContext(),"acc",Toast.LENGTH_LONG).show();
                 return true;
 
             default:
