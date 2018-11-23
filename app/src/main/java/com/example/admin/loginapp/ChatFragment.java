@@ -20,8 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ChatFragment extends Fragment {
 
     TextView textView;
-    Task<Void> databaseReference;
-    String firebaseAuth;
+
 
     public ChatFragment() {
         // Required empty public constructor
@@ -34,8 +33,6 @@ public class ChatFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_chat, container, false);
         textView = view.findViewById(R.id.chat_id);
-        firebaseAuth = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("name").setValue(textView);
         return view;
     }
 
