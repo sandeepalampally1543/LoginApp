@@ -50,7 +50,7 @@ public class Profile extends AppCompatActivity {
     }
     public void sendTostart()
     {
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(),Login.class);
         startActivity(intent);
         finish();
     }

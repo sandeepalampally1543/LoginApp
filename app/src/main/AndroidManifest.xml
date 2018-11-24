@@ -26,6 +26,11 @@
             android:name=".SettingsActivity"
             android:parentActivityName=".Profile"
             tools:targetApi="jelly_bean" />
+
+        <activity
+            android:name=".Setting_change"
+            android:parentActivityName=".SettingsActivity"
+            tools:targetApi="jelly_bean" />
     </application>
 
 </manifest>

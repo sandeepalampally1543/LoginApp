@@ -1,7 +1,10 @@
 package com.example.admin.loginapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -20,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     TextView user_name;
     android.support.v7.widget.Toolbar settings_toolbar;
+    Button changename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        changename = (Button)findViewById(R.id.changestatus);
         user_name = (TextView)findViewById(R.id.profile_name);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = firebaseUser.getUid();
@@ -42,11 +47,22 @@ public class SettingsActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("name").getValue().toString();
 
                 user_name.setText(name);
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+        changename.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(SettingsActivity.this,Setting_change.class);
+                String update_name = user_name.getText().toString();
+                intent.putExtra("name",update_name);
+                startActivity(intent);
             }
         });
     }

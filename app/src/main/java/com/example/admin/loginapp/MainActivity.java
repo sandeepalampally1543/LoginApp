@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     {
         final String name = displayname.getText().toString().trim();
         final String email = username.getText().toString().trim();
-        String pass = password.getText().toString().trim();
+        final String pass = password.getText().toString().trim();
         if (TextUtils.isEmpty(email))
         {
             Toast.makeText(this,"Enter email",Toast.LENGTH_LONG).show();
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
         show.setMessage("Registering...");
         show.show();
-        firebaseAuth.createUserWithEmailAndPassword(name,email)
+        firebaseAuth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             HashMap<String,String> userMap= new HashMap<>();
                             userMap.put("name",name);
                             userMap.put("email",email);
+                            userMap.put("pass",pass);
 
                             firebaseDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
