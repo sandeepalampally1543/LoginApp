@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                             userMap.put("name",name);
                             userMap.put("email",email);
                             userMap.put("pass",pass);
+                            userMap.put("image","default");
+                            userMap.put("thumb_nail","default");
 
                             firebaseDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
