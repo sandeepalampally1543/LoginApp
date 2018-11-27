@@ -1,5 +1,6 @@
 package com.example.admin.loginapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -23,9 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -34,6 +38,8 @@ public class SettingsActivity extends AppCompatActivity {
     TextView user_name;
     android.support.v7.widget.Toolbar settings_toolbar;
     Button changename,change_image;
+    ProgressDialog progressDialog;
+    CircleImageView circleImageView;
 
     //firebase storgae
     StorageReference mimage_storage;
@@ -48,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        circleImageView = (CircleImageView)findViewById(R.id.profile_image);
         change_image = (Button)findViewById(R.id.changeimage);
         changename = (Button)findViewById(R.id.changestatus);
         user_name = (TextView)findViewById(R.id.profile_name);
@@ -61,7 +68,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String name = dataSnapshot.child("name").getValue().toString();
+                String image = dataSnapshot.child("image").getValue().toString();
                 user_name.setText(name);
+                Picasso.with(SettingsActivity.this).load(image).into(circleImageView);
             }
 
             @Override
@@ -106,18 +115,35 @@ public class SettingsActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
 
-                StorageReference filepath = mimage_storage.child("profile_images").child(random() + ".jpg");
+                progressDialog = new ProgressDialog(SettingsActivity.this);
+                progressDialog.setTitle("Uploading Image");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+                Uri resultUri = result.getUri();
+                String current_userid = firebaseUser.getUid();
+                StorageReference filepath = mimage_storage.child("profile_images").child(current_userid + ".jpg");
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                     if (task.isSuccessful())
                     {
+                        String download_url = task.getResult().getDownloadUrl().toString();
+
+                        databaseReference.child("image").setValue(download_url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful())
+                                {
+                                    progressDialog.dismiss();
+                                }
+                            }
+                        });
 
                     }else
                     {
-
+                        progressDialog.dismiss();
                     }
                     }
                 });
@@ -127,17 +153,5 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
-    public static String random()
-    {
-        Random random = new Random();
-        StringBuilder randomStringbuilder = new StringBuilder();
-        int randomlength = random.nextInt(10);
-        char tempchar;
-        for (int i = 0 ; i<randomlength;i++)
-        {
-            tempchar = (char)(random.nextInt(96)+32);
-            randomStringbuilder.append(tempchar);
-        }
-        return randomStringbuilder.toString();
-    }
+
 }
