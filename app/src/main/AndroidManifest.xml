@@ -4,8 +4,9 @@
     package="com.example.admin.loginapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -28,11 +29,16 @@
             android:name=".SettingsActivity"
             android:parentActivityName=".Profile"
             tools:targetApi="jelly_bean" />
-
         <activity
             android:name=".Setting_change"
             android:parentActivityName=".SettingsActivity"
             tools:targetApi="jelly_bean" />
+
+        <activity android:name=".All_Users"
+            android:parentActivityName=".Profile"
+            tools:targetApi="jelly_bean"/>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>

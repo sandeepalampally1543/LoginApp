@@ -71,6 +71,12 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
+            case R.id.all_users:
+
+                Intent all_users = new Intent(Profile.this,All_Users.class);
+                startActivity(all_users);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
