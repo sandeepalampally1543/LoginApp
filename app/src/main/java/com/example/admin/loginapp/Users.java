@@ -8,21 +8,21 @@ public class Users {
     }
     public String name;
     public String image;
-    public String thumb_image;
+    public String thumb_nail;
 
-    public Users(String name,String image,String thumb_image)
+    public Users(String name,String image,String thumb_nail)
     {
         this.name = name;
         this.image = image;
-        this.thumb_image = thumb_image;
+        this.thumb_nail = thumb_nail;
     }
 
-    public String getThumb_image() {
-        return thumb_image;
+    public String getThumb_nail() {
+        return thumb_nail;
     }
 
-    public void setThumb_image(String thumb_image) {
-        this.thumb_image = thumb_image;
+    public void setThumb_nail(String thumb_nail) {
+        this.thumb_nail = thumb_nail;
     }
 
 

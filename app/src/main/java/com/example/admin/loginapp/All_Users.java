@@ -57,7 +57,7 @@ public class All_Users extends AppCompatActivity {
             protected void populateViewHolder(UserViewholder viewHolder, Users model, int position) {
 
                 viewHolder.setName(model.getName());
-                viewHolder.setUserImage(model.getThumb_image(),getApplicationContext());
+                viewHolder.setUserImage(model.getThumb_nail(),getApplicationContext());
 
                 final String user_id = getRef(position).getKey();
                 viewHolder.mview.setOnClickListener(new View.OnClickListener() {
