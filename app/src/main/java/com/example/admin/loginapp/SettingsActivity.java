@@ -34,6 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -171,10 +172,11 @@ public class SettingsActivity extends AppCompatActivity {
                                 String thumb_download = task.getResult().getDownloadUrl().toString();
                                 if (task.isSuccessful())
                                 {
-                                    HashMap<String,String> update_hashmap = new HashMap<>();
+                                    Map update_hashmap = new HashMap();
                                     update_hashmap.put("image",download_url);
+                                    update_hashmap.put("thumb_nail",thumb_download);
 
-                                    databaseReference.child("image").setValue(download_url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    databaseReference.updateChildren(update_hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful())
@@ -191,7 +193,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
                     }else
                     {
                         progressDialog.dismiss();

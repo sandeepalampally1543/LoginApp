@@ -1,5 +1,7 @@
 package com.example.admin.loginapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,9 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class All_Users extends AppCompatActivity {
 
@@ -52,6 +57,18 @@ public class All_Users extends AppCompatActivity {
             protected void populateViewHolder(UserViewholder viewHolder, Users model, int position) {
 
                 viewHolder.setName(model.getName());
+                viewHolder.setUserImage(model.getThumb_image(),getApplicationContext());
+
+                final String user_id = getRef(position).getKey();
+                viewHolder.mview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent profileintent = new Intent(All_Users.this,UsersProfile.class);
+                        profileintent.putExtra("user_id",user_id);
+                        startActivity(profileintent);
+                    }
+                });
             }
         };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
@@ -68,6 +85,11 @@ public class All_Users extends AppCompatActivity {
         {
             TextView usernameview = mview.findViewById(R.id.single_name);
             usernameview.setText(name);
+        }
+        public void setUserImage(String image, Context context)
+        {
+            CircleImageView userImageView = mview.findViewById(R.id.singlr_image);
+            Picasso.with(context).load(image).placeholder(R.mipmap.ic_launcher).into(userImageView);
         }
     }
 }

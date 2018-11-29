@@ -33,12 +33,14 @@
             android:name=".Setting_change"
             android:parentActivityName=".SettingsActivity"
             tools:targetApi="jelly_bean" />
-
-        <activity android:name=".All_Users"
+        <activity
+            android:name=".All_Users"
             android:parentActivityName=".Profile"
-            tools:targetApi="jelly_bean"/>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+            tools:targetApi="jelly_bean" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".UsersProfile"></activity>
     </application>
 
 </manifest>
