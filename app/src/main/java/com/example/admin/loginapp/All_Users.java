@@ -73,6 +73,7 @@ public class All_Users extends AppCompatActivity {
         };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
+
     public static class UserViewholder extends RecyclerView.ViewHolder
     {
         View mview;
